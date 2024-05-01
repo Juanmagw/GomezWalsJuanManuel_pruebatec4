@@ -1,6 +1,6 @@
-package com.juanmagw.PruebaTecnica4.model;
+package com.juanmagw.PruebaTecnica4.dto;
 
-import jakarta.persistence.*;
+import com.juanmagw.PruebaTecnica4.model.BookingFlight;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,28 +13,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Flight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true, nullable = false)
+public class FlightDTO {
     private String code;
-    @Column(nullable = false)
     private String origin;
-    @Column(nullable = false)
     private String destination;
-    @Column(nullable = false)
     private String seatType;
-    @Column(nullable = false)
     private LocalDate originDate;
-    @Column(nullable = false)
     private LocalDate returnDate;
-    @Column(nullable = false)
     private Integer availableSeats;
-    @Column(nullable = false)
     private Double totalPrice;
-    private Boolean isDeleted;
-    @OneToMany(mappedBy = "flight")
     private List<BookingFlight> bookingFlightList;
 }

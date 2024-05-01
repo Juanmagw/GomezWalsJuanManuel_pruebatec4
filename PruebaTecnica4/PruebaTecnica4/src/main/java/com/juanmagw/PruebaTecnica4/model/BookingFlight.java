@@ -6,25 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Hotel {
+public class BookingFlight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String code;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String place;
-    private Boolean isDeleted;
-    @OneToMany(mappedBy = "hotel")
-    private List<Room> roomList;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
 }

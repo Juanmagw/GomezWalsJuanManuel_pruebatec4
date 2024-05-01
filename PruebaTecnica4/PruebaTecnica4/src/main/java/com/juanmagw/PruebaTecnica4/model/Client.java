@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -14,26 +13,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Room {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
-    private String code;
     @Column(nullable = false)
-    private String type;
+    private String name;
     @Column(nullable = false)
-    private Integer maxHostsNumber;
+    private String surname;
     @Column(nullable = false)
-    private Double price;
+    private String email;
     @Column(nullable = false)
-    private LocalDate fromDate;
-    @Column(nullable = false)
-    private LocalDate toDate;
     private Boolean isDeleted;
-    @ManyToOne
-    @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
-    @OneToMany(mappedBy = "room")
-    List<BookingRoom> bookingRoomList;
+    @OneToMany(mappedBy = "client")
+    private List<BookingFlight> bookingFlights;
+    @OneToMany(mappedBy = "client")
+    private List<BookingRoom> bookingRooms;
 }
