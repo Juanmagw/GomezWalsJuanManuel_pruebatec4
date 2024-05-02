@@ -26,6 +26,7 @@ public class BookingRoomService implements IBookingRoomService{
 
     @Override
     public Double bookRoom(BookingRoom bookingRoom) {
+        bookingRoom.setIsDeleted(false);
         bookingRoomRepository.save(bookingRoom);
         return bookingRoom.getRoom().getPrice();
     }
@@ -38,7 +39,7 @@ public class BookingRoomService implements IBookingRoomService{
             bookingRoomAux.setStartDate(bookingRoomDTO.getStartDate());
             bookingRoomAux.setEndDate(bookingRoomDTO.getEndDate());
             bookingRoomAux.setPeople(bookingRoomDTO.getPeople());
-            bookingRoomAux.setSeatType(bookingRoomDTO.getSeatType());
+            bookingRoomAux.setRoomType(bookingRoomDTO.getRoomType());
             bookingRoomAux.setClient(ClientService.getClientFromClientDTO(bookingRoomDTO.getClient()));
             bookingRoomAux.setRoom(RoomService.getRoomFromRoomDTO(bookingRoomDTO.getRoom()));
             return getBookingRoomDTOFromBookingRoom(bookingRoomRepository.save(bookingRoomAux));
@@ -68,7 +69,7 @@ public class BookingRoomService implements IBookingRoomService{
             bookingRoomDTO.setStartDate(bookingRoom.getStartDate());
             bookingRoomDTO.setEndDate(bookingRoom.getEndDate());
             bookingRoomDTO.setPeople(bookingRoom.getPeople());
-            bookingRoomDTO.setSeatType(bookingRoom.getSeatType());
+            bookingRoomDTO.setRoomType(bookingRoom.getRoomType());
             bookingRoomDTO.setClient(ClientService.getClientDTOFromClient(bookingRoom.getClient()));
             bookingRoomDTO.setRoom(RoomService.getRoomDTOFromRoom(bookingRoom.getRoom()));
             return bookingRoomDTO;

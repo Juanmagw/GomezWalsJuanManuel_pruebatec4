@@ -1,0 +1,554 @@
+{
+	"info": {
+		"_postman_id": "86521e9e-3720-4b7e-9cbb-115632289d18",
+		"name": "Api Reservas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33692050"
+	},
+	"item": [
+		{
+			"name": "Flights",
+			"item": [
+				{
+					"name": "localhost:8080/agency/flights/new",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"code\": \"AL-1234\",\r\n    \"origin\": \"Alicante\",\r\n    \"destination\": \"Lugo\",\r\n    \"seatType\": \"Business\",\r\n    \"originDate\": \"2024-08-22\",\r\n    \"returnDate\": \"2024-08-28\",\r\n    \"availableSeats\": 12,\r\n    \"totalPrice\": 3500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/flights/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flights/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/dates-travel?originDate&returnDate&origin=Madrid&destination=Barcelona",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/agency/flights/dates-travel?originDate=2024-11-30&returnDate=2024-12-05&origin=Cordoba&destination=Huelva",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"agency",
+								"flights",
+								"dates-travel"
+							],
+							"query": [
+								{
+									"key": "originDate",
+									"value": "2024-11-30"
+								},
+								{
+									"key": "returnDate",
+									"value": "2024-12-05"
+								},
+								{
+									"key": "origin",
+									"value": "Cordoba"
+								},
+								{
+									"key": "destination",
+									"value": "Huelva"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/edit/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"MABA-1234\",\r\n    \"origin\": \"Cordoba\",\r\n    \"destination\": \"Cadiz\",\r\n    \"seatType\": \"Business\",\r\n    \"originDate\": \"2024-12-30\",\r\n    \"returnDate\": \"2025-01-05\",\r\n    \"availableSeats\": 4,\r\n    \"totalPrice\": \"4800\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/flights/edit/1"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flights/8"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/delete/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/flights/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flights/allActive"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hotels",
+			"item": [
+				{
+					"name": "localhost:8080/agency/hotels/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/hotels/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/hotels/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"code\": \"HM-0001\",\r\n    \"name\": \"Hotel Major\",\r\n    \"place\": \"Barcelona\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/hotels/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/hotels/rooms/dates-travel?fromDate&toDate&destination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/agency/hotels/rooms/dates-travel?fromDate=2024-05-25&toDate=2024-06-01&destination=Madrid",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"agency",
+								"hotels",
+								"rooms",
+								"dates-travel"
+							],
+							"query": [
+								{
+									"key": "fromDate",
+									"value": "2024-05-25"
+								},
+								{
+									"key": "toDate",
+									"value": "2024-06-01"
+								},
+								{
+									"key": "destination",
+									"value": "Madrid"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/hotels/edit/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"VD-0001\",\r\n    \"name\": \"Este Far\",\r\n    \"place\": \"Valencia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/hotels/edit/6"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flights/delete/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/hotels/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/hotels/2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/hotels/6"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/hotels/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/hotels/allActive"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BookingRooms",
+			"item": [
+				{
+					"name": "localhost:8080/agency/room-booking/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"code\": \"HM-Res\",\r\n    \"startDate\": \"2024-05-25\",\r\n    \"endDate\": \"2024-06-01\",\r\n    \"people\": 1,\r\n    \"roomType\": \"Simple\",\r\n    \"client\": {\r\n        \"id\": 6\r\n    },\r\n    \"room\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/room-booking/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/room-booking/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/room-booking/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/room-booking/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/room-booking/allActive"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/room-booking/delete/2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/room-booking/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/room-booking/edit/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"P-Res\",\r\n    \"startDate\": \"2024-05-26\",\r\n    \"endDate\": \"2024-06-01\",\r\n    \"people\": 2,\r\n    \"roomType\": \"Simple\",\r\n    \"client\": {\r\n        \"id\": 1\r\n    },\r\n    \"room\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/room-booking/edit/3"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/room-booking/3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/room-booking/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "localhost:8080/agency/clients/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/clients/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/clients/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Fiona\",\r\n    \"surname\": \"Gonzales\",\r\n    \"email\": \"fionagonzales@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/clients/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/clients/edit/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Manolo\",\r\n    \"surname\": \"Gimenez\",\r\n    \"email\": \"manologimenez@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/clients/edit/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/clients/delete/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/clients/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/clients/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/clients/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/clients/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/clients/allActive"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "localhost:8080/agency/rooms/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/rooms/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/rooms/new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"code\": \"VG-H2\",\r\n    \"type\": \"Doble\",\r\n    \"maxHostsNumber\": \"4\",\r\n    \"price\": 3000,\r\n    \"fromDate\": \"2025-01-12\",\r\n    \"toDate\": \"2025-02-20\",\r\n    \"hotel\": {\r\n        \"id\": 5\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/rooms/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/rooms/edit/1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"EStado-H1\",\r\n    \"type\": \"Simple\",\r\n    \"maxHostsNumber\": \"2\",\r\n    \"price\": 1200,\r\n    \"fromDate\": \"2024-05-25\",\r\n    \"toDate\": \"2024-06-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/rooms/edit/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/rooms/1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/rooms/4"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/rooms/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/rooms/allActive"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/rooms/delete/2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/rooms/delete/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BookingFlights",
+			"item": [
+				{
+					"name": "localhost:8080/agency/flight-booking/new",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"code\": \"VC-Res\",\r\n    \"startDate\": \"2024-08-22\",\r\n    \"people\": 6,\r\n    \"origin\": \"Valencia\",\r\n    \"destination\": \"Cordoba\",\r\n    \"client\": {\r\n        \"id\": 1\r\n    },\r\n    \"flight\": {\r\n        \"id\": 5\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/flight-booking/new"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flight-booking/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flight-booking/all"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flight-booking/allActive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flight-booking/allActive"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flight-booking/delete/2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/agency/flight-booking/delete/2"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flight-booking/edit/1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"VC-Res\",\r\n    \"startDate\": \"2024-08-22\",\r\n    \"people\": 5,\r\n    \"origin\": \"Valencia\",\r\n    \"destination\": \"Cordoba\",\r\n    \"client\": {\r\n        \"id\": 1\r\n    },\r\n    \"flight\": {\r\n        \"id\": 5\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/agency/flight-booking/edit/3"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/agency/flight-booking/3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/agency/flight-booking/2"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

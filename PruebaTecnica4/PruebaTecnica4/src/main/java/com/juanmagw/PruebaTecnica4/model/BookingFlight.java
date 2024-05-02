@@ -21,16 +21,16 @@ public class BookingFlight {
     @Column(unique = true, nullable = false)
     @NotNull(message = "Code cannot be null")
     private String code;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "StartDate cannot be null")
     private LocalDate startDate;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "Origin cannot be null")
     private String origin;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "Destination cannot be null")
     private String destination;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "People cannot be null")
     private Integer people;
     private Boolean isDeleted;

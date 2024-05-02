@@ -26,6 +26,7 @@ public class BookingFlightService implements IBookingFlightService{
 
     @Override
     public Double bookFlight(BookingFlight bookingFlight) {
+        bookingFlight.setIsDeleted(false);
         bookingFlightRepository.save(bookingFlight);
         return bookingFlight.getFlight().getTotalPrice();
     }

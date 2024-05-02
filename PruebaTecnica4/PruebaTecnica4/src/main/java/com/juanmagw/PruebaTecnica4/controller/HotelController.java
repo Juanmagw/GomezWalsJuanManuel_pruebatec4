@@ -40,7 +40,7 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.findAll());
     }
 
-    @GetMapping("/rooms")
+    @GetMapping("/rooms/dates-travel")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of rooms found successfully"),
             @ApiResponse(responseCode = "404", description = "No rooms found")

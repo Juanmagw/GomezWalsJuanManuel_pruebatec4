@@ -21,18 +21,18 @@ public class BookingRoom {
     @Column(unique = true, nullable = false)
     @NotNull(message = "Code cannot be null")
     private String code;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "StartDate cannot be null")
     private LocalDate startDate;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "EndDate cannot be null")
     private LocalDate EndDate;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @NotNull(message = "People cannot be null")
     private Integer people;
     @Column(nullable = false)
     @NotNull(message = "SeatType cannot be null")
-    private String seatType;
+    private String roomType;
     private Boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "client_id")

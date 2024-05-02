@@ -23,7 +23,7 @@ public class BookingRoomDTO {
     @NotNull(message = "People cannot be null")
     private Integer people;
     @NotNull(message = "SeatType cannot be null")
-    private String seatType;
+    private String roomType;
     @NotNull(message = "Client cannot be null")
     private ClientDTO client;
     @NotNull(message = "Room cannot be null")
