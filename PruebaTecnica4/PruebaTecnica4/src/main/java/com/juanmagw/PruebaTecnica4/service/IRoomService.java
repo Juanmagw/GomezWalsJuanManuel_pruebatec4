@@ -6,9 +6,10 @@ import com.juanmagw.PruebaTecnica4.model.Room;
 import java.util.List;
 
 public interface IRoomService {
+    List<RoomDTO> findAllActive();
     List<RoomDTO> findAll();
-    Room save(Room room);
-    Room update(Room room, Long id);
+    RoomDTO save(Room room);
+    RoomDTO update(RoomDTO roomDTO, Long id);
     void delete(Long id);
-    Room findById(Long id);
+    RoomDTO findById(Long id);
 }

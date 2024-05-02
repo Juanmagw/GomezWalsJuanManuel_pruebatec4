@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RoomService implements IRoomService{
@@ -16,33 +15,37 @@ public class RoomService implements IRoomService{
     private RoomRepository roomRepository;
 
     @Override
-    public List<RoomDTO> findAll() {
-        return roomRepository.findAll().stream().map(this::getRoomDTOFromRoom).collect(Collectors.toList());
+    public List<RoomDTO> findAllActive(){
+        return roomRepository.findAll().stream().filter(room -> !room.getIsDeleted()).map(RoomService::getRoomDTOFromRoom).toList();
     }
 
     @Override
-    public Room save(Room room) {
+    public List<RoomDTO> findAll() {
+        return roomRepository.findAll().stream().map(RoomService::getRoomDTOFromRoom).toList();
+    }
+
+    @Override
+    public RoomDTO save(Room room) {
         if (findById(room.getId()) == null) {
             room.setIsDeleted(false);
-            return roomRepository.save(room);
+            return RoomService.getRoomDTOFromRoom(roomRepository.save(room));
         }else{
             return null;
         }
     }
 
     @Override
-    public Room update(Room room, Long id) {
-        Room roomAux = findById(id);
+    public RoomDTO update(RoomDTO roomDTO, Long id) {
+        Room roomAux = roomRepository.findById(id).orElse(null);
         if(roomAux != null) {
-            roomAux.setCode(room.getCode());
-            roomAux.setType(room.getType());
-            roomAux.setMaxHostsNumber(room.getMaxHostsNumber());
-            roomAux.setPrice(room.getPrice());
-            roomAux.setFromDate(room.getFromDate());
-            roomAux.setToDate(room.getToDate());
-            roomAux.setHotel(room.getHotel());
-            roomAux.setBookingRoomList(room.getBookingRoomList());
-            return roomRepository.save(roomAux);
+            roomAux.setCode(roomDTO.getCode());
+            roomAux.setType(roomDTO.getType());
+            roomAux.setMaxHostsNumber(roomDTO.getMaxHostsNumber());
+            roomAux.setPrice(roomDTO.getPrice());
+            roomAux.setFromDate(roomDTO.getFromDate());
+            roomAux.setToDate(roomDTO.getToDate());
+            roomAux.setHotel(HotelService.getHotelFromHotelDTO(roomDTO.getHotel()));
+            return RoomService.getRoomDTOFromRoom(roomRepository.save(roomAux));
         } else {
             return null;
         }
@@ -50,26 +53,45 @@ public class RoomService implements IRoomService{
 
     @Override
     public void delete(Long id) {
-        Room room = findById(id);
-        room.setIsDeleted(true);
-        roomRepository.save(room);
+        Room room = roomRepository.findById(id).orElse(null);
+        if (room != null) {
+            room.setIsDeleted(true);
+            roomRepository.save(room);
+        }
     }
 
     @Override
-    public Room findById(Long id) {
-        return roomRepository.findById(id).orElse(null);
+    public RoomDTO findById(Long id) {
+        return RoomService.getRoomDTOFromRoom(roomRepository.findById(id).orElse(null));
     }
 
-    public RoomDTO getRoomDTOFromRoom(Room room){
+    public static Room getRoomFromRoomDTO(RoomDTO roomDTO){
+        Room room = new Room();
+        if (roomDTO != null) {
+            room.setCode(roomDTO.getCode());
+            room.setType(roomDTO.getType());
+            room.setMaxHostsNumber(roomDTO.getMaxHostsNumber());
+            room.setPrice(roomDTO.getPrice());
+            room.setFromDate(roomDTO.getFromDate());
+            room.setToDate(roomDTO.getToDate());
+            return room;
+        }else{
+            return null;
+        }
+    }
+
+    public static RoomDTO getRoomDTOFromRoom(Room room){
         RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setCode(room.getCode());
-        roomDTO.setType(room.getType());
-        roomDTO.setMaxHostsNumber(room.getMaxHostsNumber());
-        roomDTO.setPrice(room.getPrice());
-        roomDTO.setFromDate(room.getFromDate());
-        roomDTO.setToDate(room.getToDate());
-        roomDTO.setHotel(room.getHotel());
-        roomDTO.setBookingRoomList(room.getBookingRoomList());
-        return roomDTO;
+        if (room != null) {
+            roomDTO.setCode(room.getCode());
+            roomDTO.setType(room.getType());
+            roomDTO.setMaxHostsNumber(room.getMaxHostsNumber());
+            roomDTO.setPrice(room.getPrice());
+            roomDTO.setFromDate(room.getFromDate());
+            roomDTO.setToDate(room.getToDate());
+            return roomDTO;
+        }else{
+            return null;
+        }
     }
 }

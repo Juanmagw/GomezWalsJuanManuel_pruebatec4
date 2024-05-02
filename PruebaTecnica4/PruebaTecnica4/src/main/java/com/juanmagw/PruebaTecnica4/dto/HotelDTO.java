@@ -1,20 +1,20 @@
 package com.juanmagw.PruebaTecnica4.dto;
 
-import com.juanmagw.PruebaTecnica4.model.Room;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class HotelDTO {
+    @NotNull(message = "Code cannot be null")
     private String code;
+    @NotNull(message = "Name cannot be null")
     private String name;
+    @NotNull(message = "Place cannot be null")
     private String place;
-    private List<Room> roomList;
 }

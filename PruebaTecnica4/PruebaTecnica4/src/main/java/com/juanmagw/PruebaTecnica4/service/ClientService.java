@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClientService implements IClientService{
@@ -16,30 +15,33 @@ public class ClientService implements IClientService{
     private ClientRepository clientRepository;
 
     @Override
-    public List<ClientDTO> findAll() {
-        return clientRepository.findAll().stream().map(this::getClientDTOFromClient).collect(Collectors.toList());
+    public List<ClientDTO> findAllActive(){
+        return clientRepository.findAll().stream().filter(room -> !room.getIsDeleted()).map(ClientService::getClientDTOFromClient).toList();
     }
 
     @Override
-    public Client save(Client client) {
+    public List<ClientDTO> findAll() {
+        return clientRepository.findAll().stream().map(ClientService::getClientDTOFromClient).toList();
+    }
+
+    @Override
+    public ClientDTO save(Client client) {
         if (findById(client.getId()) == null) {
             client.setIsDeleted(false);
-            return clientRepository.save(client);
+            return getClientDTOFromClient(clientRepository.save(client));
         }else{
             return null;
         }
     }
 
     @Override
-    public Client update(Client client, Long id) {
-        Client clientAux = findById(id);
+    public ClientDTO update(ClientDTO clientDTO, Long id) {
+        Client clientAux = clientRepository.findById(id).orElse(null);
         if(clientAux != null) {
-            clientAux.setName(client.getName());
-            clientAux.setSurname(client.getSurname());
-            clientAux.setEmail(client.getEmail());
-            clientAux.setBookingFlights(client.getBookingFlights());
-            clientAux.setBookingRooms(client.getBookingRooms());
-            return clientRepository.save(clientAux);
+            clientAux.setName(clientDTO.getName());
+            clientAux.setSurname(clientDTO.getSurname());
+            clientAux.setEmail(clientDTO.getEmail());
+            return getClientDTOFromClient(clientRepository.save(clientAux));
         } else {
             return null;
         }
@@ -47,23 +49,39 @@ public class ClientService implements IClientService{
 
     @Override
     public void delete(Long id) {
-        Client client = findById(id);
-        client.setIsDeleted(true);
-        clientRepository.save(client);
+        Client client = clientRepository.findById(id).orElse(null);
+        if (client != null) {
+            client.setIsDeleted(true);
+            clientRepository.save(client);
+        }
     }
 
     @Override
-    public Client findById(Long id) {
-        return clientRepository.findById(id).orElse(null);
+    public ClientDTO findById(Long id) {
+        return getClientDTOFromClient(clientRepository.findById(id).orElse(null));
     }
 
-    public ClientDTO getClientDTOFromClient(Client client){
+    public static ClientDTO getClientDTOFromClient(Client client){
         ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setName(client.getName());
-        clientDTO.setSurname(client.getSurname());
-        clientDTO.setEmail(client.getEmail());
-        clientDTO.setBookingFlights(client.getBookingFlights());
-        clientDTO.setBookingRooms(client.getBookingRooms());
-        return clientDTO;
+        if (client != null) {
+            clientDTO.setName(client.getName());
+            clientDTO.setSurname(client.getSurname());
+            clientDTO.setEmail(client.getEmail());
+            return clientDTO;
+        }else {
+            return null;
+        }
+    }
+
+    public static Client getClientFromClientDTO(ClientDTO clientDTO){
+        Client client = new Client();
+        if (clientDTO != null){
+            client.setName(clientDTO.getName());
+            client.setSurname(clientDTO.getSurname());
+            client.setEmail(clientDTO.getEmail());
+            return client;
+        }else{
+            return null;
+        }
     }
 }

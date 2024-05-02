@@ -6,9 +6,10 @@ import com.juanmagw.PruebaTecnica4.model.Client;
 import java.util.List;
 
 public interface IClientService {
+    List<ClientDTO> findAllActive();
     List<ClientDTO> findAll();
-    Client save(Client client);
-    Client update(Client client, Long id);
+    ClientDTO save(Client client);
+    ClientDTO update(ClientDTO clientDTO, Long id);
     void delete(Long id);
-    Client findById(Long id);
+    ClientDTO findById(Long id);
 }

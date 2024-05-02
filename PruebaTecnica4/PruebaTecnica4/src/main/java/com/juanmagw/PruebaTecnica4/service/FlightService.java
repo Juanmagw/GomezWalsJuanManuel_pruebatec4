@@ -1,7 +1,6 @@
 package com.juanmagw.PruebaTecnica4.service;
 
 import com.juanmagw.PruebaTecnica4.dto.FlightDTO;
-import com.juanmagw.PruebaTecnica4.model.BookingFlight;
 import com.juanmagw.PruebaTecnica4.model.Flight;
 import com.juanmagw.PruebaTecnica4.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FlightService implements IFlightService{
@@ -18,43 +16,38 @@ public class FlightService implements IFlightService{
     private FlightRepository flightRepository;
 
     @Override
+    public List<FlightDTO> findAllActive(){
+        return flightRepository.findAll().stream().filter(room -> !room.getIsDeleted()).map(FlightService::getFlightDTOFromFlight).toList();
+    }
+
+    @Override
     public List<FlightDTO> findAll() {
-        return flightRepository.findAll().stream().map(this::getFlightDTOFromFlight).collect(Collectors.toList());
+        return flightRepository.findAll().stream().map(FlightService::getFlightDTOFromFlight).toList();
     }
 
     @Override
     public List<FlightDTO> findFlightsByDatesOriginDestination(LocalDate originDate, LocalDate returnDate, String origin, String destination) {
-        return findAll().stream().filter(flightDTO -> flightDTO.getOrigin().equals(origin) && flightDTO.getDestination().equals(destination) && flightDTO.getOriginDate().equals(originDate) && flightDTO.getReturnDate().equals(returnDate)).collect(Collectors.toList());
-    }
-
-    @Override
-    public Double bookFlight(BookingFlight bookingFlight) {
-        return bookingFlight.getFlight().getTotalPrice();
+        return findAll().stream().filter(flightDTO -> flightDTO.getOrigin().equals(origin) && flightDTO.getDestination().equals(destination) && flightDTO.getOriginDate().equals(originDate) && flightDTO.getReturnDate().equals(returnDate)).toList();
     }
 
     @Override
     public Flight save(Flight flight) {
-        if (findById(flight.getId()) == null) {
             flight.setIsDeleted(false);
             return flightRepository.save(flight);
-        }else{
-           return null;
-        }
     }
 
     @Override
-    public Flight update(Flight flight, Long id) {
-        Flight flightAux = findById(id);
+    public FlightDTO update(FlightDTO flightDTO, Long id) {
+        Flight flightAux = flightRepository.findById(id).orElse(null);
         if (flightAux != null) {
-            flightAux.setCode(flight.getCode());
-            flightAux.setOrigin(flight.getOrigin());
-            flightAux.setDestination(flight.getDestination());
-            flightAux.setSeatType(flight.getSeatType());
-            flightAux.setTotalPrice(flight.getTotalPrice());
-            flightAux.setOriginDate(flight.getOriginDate());
-            flightAux.setReturnDate(flight.getReturnDate());
-            flightAux.setIsDeleted(flight.getIsDeleted());
-            return flightRepository.save(flightAux);
+            flightAux.setCode(flightDTO.getCode());
+            flightAux.setOrigin(flightDTO.getOrigin());
+            flightAux.setDestination(flightDTO.getDestination());
+            flightAux.setSeatType(flightDTO.getSeatType());
+            flightAux.setTotalPrice(flightDTO.getTotalPrice());
+            flightAux.setOriginDate(flightDTO.getOriginDate());
+            flightAux.setReturnDate(flightDTO.getReturnDate());
+            return getFlightDTOFromFlight(flightRepository.save(flightAux));
         }else{
             return null;
         }
@@ -62,7 +55,7 @@ public class FlightService implements IFlightService{
 
     @Override
     public void delete(Long id) {
-        Flight flight = findById(id);
+        Flight flight = flightRepository.findById(id).orElse(null);
         if (flight != null) {
             flight.setIsDeleted(true);
             flightRepository.save(flight);
@@ -70,21 +63,42 @@ public class FlightService implements IFlightService{
     }
 
     @Override
-    public Flight findById(Long id) {
-        return flightRepository.findById(id).orElse(null);
+    public FlightDTO findById(Long id) {
+        return getFlightDTOFromFlight(flightRepository.findById(id).orElse(null));
     }
 
-    public FlightDTO getFlightDTOFromFlight(Flight flight){
+    public static FlightDTO getFlightDTOFromFlight(Flight flight){
         FlightDTO flightDTO = new FlightDTO();
-        flightDTO.setCode(flight.getCode());
-        flightDTO.setOrigin(flight.getOrigin());
-        flightDTO.setDestination(flight.getDestination());
-        flightDTO.setSeatType(flight.getSeatType());
-        flightDTO.setAvailableSeats(flight.getAvailableSeats());
-        flightDTO.setTotalPrice(flight.getTotalPrice());
-        flightDTO.setOriginDate(flight.getOriginDate());
-        flightDTO.setReturnDate(flight.getReturnDate());
-        flightDTO.setBookingFlightList(flight.getBookingFlightList());
-        return flightDTO;
+        if (flight != null){
+            flightDTO.setCode(flight.getCode());
+            flightDTO.setOrigin(flight.getOrigin());
+            flightDTO.setDestination(flight.getDestination());
+            flightDTO.setSeatType(flight.getSeatType());
+            flightDTO.setAvailableSeats(flight.getAvailableSeats());
+            flightDTO.setTotalPrice(flight.getTotalPrice());
+            flightDTO.setOriginDate(flight.getOriginDate());
+            flightDTO.setReturnDate(flight.getReturnDate());
+            return flightDTO;
+        }else{
+            return null;
+        }
+
+    }
+
+    public static Flight getFlightFromFlightDTO(FlightDTO flightDTO){
+        Flight flight = new Flight();
+        if (flightDTO != null){
+            flight.setCode(flightDTO.getCode());
+            flight.setOrigin(flightDTO.getOrigin());
+            flight.setDestination(flightDTO.getDestination());
+            flight.setSeatType(flightDTO.getSeatType());
+            flight.setAvailableSeats(flightDTO.getAvailableSeats());
+            flight.setTotalPrice(flightDTO.getTotalPrice());
+            flight.setOriginDate(flightDTO.getOriginDate());
+            flight.setReturnDate(flightDTO.getReturnDate());
+            return flight;
+        }else{
+            return null;
+        }
     }
 }
